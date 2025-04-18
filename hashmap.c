@@ -80,8 +80,15 @@ HashMap * createMap(long capacity) {
 }
 
 void eraseMap(HashMap * map,  char * key) {    
-
-
+    long pos = hash(key, map->capacity);
+    while(map->buckets[pos] != NULL) {
+        if(map->buckets[pos]->key != NULL && is_equal(map->buckets[pos]->key, key)) {
+            map->buckets[pos]->key = NULL;
+            map->size--;
+            return;
+        }
+        pos = (pos+1) % map->capacity;
+    }
 }
 
 Pair * searchMap(HashMap * map,  char * key) {   
